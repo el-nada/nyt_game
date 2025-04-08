@@ -1,0 +1,53 @@
+.menu{
+    height: 40px;
+    background-color: #d3d6da;
+}
+.header{
+    text-align: center; 
+}
+.grid {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    padding: 20px; 
+}
+  
+.row {
+    justify-content: center;
+    display: flex;
+    gap: 5px;
+}
+
+.tile {
+    width: 60px;
+    height: 60px;
+    border: 2px solid #d3d6da;
+    font-size: 32px;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-transform: uppercase;
+}
+
+.key{
+    width: 25px;
+    height: 25px;
+    font-size: 18px;
+    color: white; 
+    font-weight: bold;
+    text-align: center;
+    background-color: #d3d6da;
+    border-radius: 8px;
+    margin: 5px; 
+    padding: 10px;
+}
+
+.largekey{
+    width: 50px;
+}
+
+
+.keyboard{
+    padding: 20px; 
+}

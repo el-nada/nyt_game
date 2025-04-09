@@ -43,8 +43,8 @@ function submitGuess(){
     if (guess==word){
         alert()
     }
-    else if (currentTile==5){
-        currentTile=0
+    else if (currentTile==5 && currentRow<5){
+        currentTile=0; 
         currentRow++; 
     }
 }

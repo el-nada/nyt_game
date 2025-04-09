@@ -67,6 +67,7 @@ function submitGuess(){
         currentTile=0; 
         currentRow++; 
     }
+    getWord()
 }
 
 function updateRow(guess){
@@ -112,7 +113,7 @@ function applyColors(colors, guess){
 function updateKeyboardColors(guess) {
     const keys = document.querySelectorAll('.key');
     for (let i = 0; i < guess.length; i++) {
-        
+
         const letter = guess[i];
         const key = [...document.querySelectorAll('.key')].find(
             k => k.textContent.trim() === letter
@@ -128,4 +129,11 @@ function updateKeyboardColors(guess) {
             key.classList.add('keyAbsent'); 
         }
     };
+}
+
+async function getWord() {
+    const res = await fetch('https://random-word-api.herokuapp.com/word?length=5');
+    const [word] = await res.json();
+    console.log(word)
+    return word.toUpperCase();
 }

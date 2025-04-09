@@ -1,5 +1,5 @@
 
-const word = "LEOHS"; 
+const word = "HELLO"; 
 
 let currentRow = 0; 
 let currentTile = 0; 
@@ -58,6 +58,8 @@ function submitGuess(){
     const tiles = document.querySelectorAll(`.row:nth-child(${currentRow + 1}) .tile`);
     const guess = Array.from(tiles, tile => tile.textContent);
     if (guess.join('')==word){
+        applyColors(new Array(5).fill(2), guess)
+        currentRow=5
         alert()
     }
     else if (currentTile==5 && currentRow<5){
@@ -86,10 +88,10 @@ function updateRow(guess){
         }
     }
 
-    applyColors(colors)
+    applyColors(colors, guess)
 }
 
-function applyColors(colors){
+function applyColors(colors, guess){
     const tiles = document.querySelectorAll(`.row:nth-child(${currentRow + 1}) .tile`);
     colors.forEach((color, i) => {
         tiles[i].classList.remove('hover');
@@ -102,5 +104,28 @@ function applyColors(colors){
               colors[i] === 1 ? 'present' : 'absent');
           }, i * 400); // Delay each tile by 200ms
 
-      })
+    })
+    
+    updateKeyboardColors(guess)
+}
+
+function updateKeyboardColors(guess) {
+    const keys = document.querySelectorAll('.key');
+    for (let i = 0; i < guess.length; i++) {
+        
+        const letter = guess[i];
+        const key = [...document.querySelectorAll('.key')].find(
+            k => k.textContent.trim() === letter
+        );
+
+        if (letter === word[i]) {
+            key.classList.add('keyCorrect');
+        } else if (word.includes(letter)) {
+            if (!key.classList.contains('keyCorrect')) {
+                key.classList.add('keyPresent');
+            }
+        } else {
+            key.classList.add('keyAbsent'); 
+        }
+    };
 }

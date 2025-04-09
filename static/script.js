@@ -18,6 +18,7 @@ function addLetter(letter) {
     if (currentTile >= 5) return;
     const tiles = document.querySelectorAll('.row')[currentRow].children;
     tiles[currentTile].textContent = letter;
+    tiles[currentTile].classList.add('hover'); 
     currentTile++;
 }
 
@@ -25,6 +26,7 @@ function deleteLetter() {
     if (currentTile <= 0) return;
     currentTile--;
     const tiles = document.querySelectorAll('.row')[currentRow].children;
+    tiles[currentTile].classList.remove('hover');
     tiles[currentTile].textContent = '';
 }
 
@@ -69,5 +71,21 @@ function updateRow(guess){
         }
     }
 
-    console.log(colors)
+    applyColors(colors)
+}
+
+function applyColors(colors){
+    const tiles = document.querySelectorAll(`.row:nth-child(${currentRow + 1}) .tile`);
+    colors.forEach((color, i) => {
+        tiles[i].classList.remove('hover');
+        tiles[i].classList.add('flip');
+
+        setTimeout(() => {
+            tiles[i].classList.remove('flip');
+            tiles[i].classList.add('revealed', 
+              colors[i] === 2 ? 'correct' : 
+              colors[i] === 1 ? 'present' : 'absent');
+          }, i * 400); // Delay each tile by 200ms
+
+      })
 }

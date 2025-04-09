@@ -40,5 +40,11 @@ function isLetter(event){
 function submitGuess(){
     const tiles = document.querySelectorAll(`.row:nth-child(${currentRow + 1}) .tile`);
     const guess = Array.from(tiles, tile => tile.textContent).join('');
-    console.log(guess==word)
+    if (guess==word){
+        alert()
+    }
+    else if (currentTile==5){
+        currentTile=0
+        currentRow++; 
+    }
 }

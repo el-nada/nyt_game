@@ -1,5 +1,5 @@
 
-const word = "HELLO"; 
+const word = "LEOHS"; 
 
 let currentRow = 0; 
 let currentTile = 0; 
@@ -39,12 +39,35 @@ function isLetter(event){
 
 function submitGuess(){
     const tiles = document.querySelectorAll(`.row:nth-child(${currentRow + 1}) .tile`);
-    const guess = Array.from(tiles, tile => tile.textContent).join('');
-    if (guess==word){
+    const guess = Array.from(tiles, tile => tile.textContent);
+    if (guess.join('')==word){
         alert()
     }
     else if (currentTile==5 && currentRow<5){
+        updateRow(guess)
         currentTile=0; 
         currentRow++; 
     }
+}
+
+function updateRow(guess){
+    const colors = new Array(5).fill(0); // 0 = gray, 1 = yellow, 2 = green
+    const wordLetterCounts = {};
+
+    for (let i = 0; i < 5; i++) {
+        if (guess[i] !== word[i]) {
+          wordLetterCounts[word[i]] = (wordLetterCounts[word[i]] || 0) + 1;
+        }
+      }
+    
+    for (let i = 0; i < 5; i++) {
+        if (guess[i] === word[i]) {
+            colors[i] = 2; // Green
+        } else if (wordLetterCounts[guess[i]] > 0) {
+            colors[i] = 1; // Yellow
+            wordLetterCounts[guess[i]]--;
+        }
+    }
+
+    console.log(colors)
 }

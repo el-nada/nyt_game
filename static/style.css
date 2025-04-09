@@ -71,9 +71,15 @@ body {
 }
 
 .hover{
+    animation: bounce 0.2s ease-in-out;
     border: 2px solid rgb(86,87,88); 
 }
 
+@keyframes bounce {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+}
+  
 .correct{
     background-color: rgb(107,170,100);
     border: 2px solid rgb(107,170,100);

@@ -12,7 +12,22 @@ document.addEventListener('keydown', (e) => {
     } else if (isLetter(e)) {
       addLetter(e.key.toUpperCase());
     }
-  });
+});
+
+document.querySelector('.keyboard').addEventListener('click', (e) => {
+    const key = e.target.closest('.key'); 
+    if (!key) return;
+  
+    const keyText = key.textContent.trim();
+    console.log(keyText)
+    if (keyText === 'Enter') {
+      submitGuess();
+    } else if (keyText === 'backspace') {
+      deleteLetter();
+    } else if (/[A-Z]/.test(keyText)) {
+      addLetter(keyText);
+    }
+});
   
 function addLetter(letter) {
     if (currentTile >= 5) return;

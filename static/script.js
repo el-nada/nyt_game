@@ -1,5 +1,5 @@
 
-const word = 'hello'; 
+const word = "HELLO"; 
 
 let currentRow = 0; 
 let currentTile = 0; 
@@ -9,7 +9,7 @@ document.addEventListener('keydown', (e) => {
       submitGuess();
     } else if (e.key === 'Backspace') {
       deleteLetter();
-    } else if (isLetter(e.key)) {
+    } else if (isLetter(e)) {
       addLetter(e.key.toUpperCase());
     }
   });
@@ -37,3 +37,8 @@ function isLetter(event){
     return false; 
 }
 
+function submitGuess(){
+    const tiles = document.querySelectorAll(`.row:nth-child(${currentRow + 1}) .tile`);
+    const guess = Array.from(tiles, tile => tile.textContent).join('');
+    console.log(guess==word)
+}

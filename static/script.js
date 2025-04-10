@@ -54,28 +54,50 @@ function isLetter(event){
     return false; 
 }
 
-function submitGuess(){
+async function submitGuess(){
     const tiles = document.querySelectorAll(`.row:nth-child(${currentRow + 1}) .tile`);
     const guess = Array.from(tiles, tile => tile.textContent);
 
+    let valid = await isValidWord(guess.join('')); 
+
+    
     if (guess.join('')==word){
         applyColors(new Array(5).fill(2), guess)
         currentRow=5
-        alert()
     }
     else if (currentTile ==5 && currentRow==5){
+        if (!valid) {
+            addMessage("Not a valid word!");
+            return;
+        }
         addMessage(word)
         updateRow(guess); 
         currentTile=0; 
         currentRow++; 
     }
     else if (currentTile==5 && currentRow<6){
+        if (!valid) {
+            addMessage("Not a valid word!");
+            return;
+        }
         updateRow(guess); 
         currentTile=0; 
         currentRow++; 
     }
 }
 
+async function isValidWord(guess) {
+    try {
+      const response = await fetch(
+        `https://api.datamuse.com/words?exact=${guess}&sp=${guess}&max=1`
+      );
+      const data = await response.json();
+      return data.some(entry => entry.word === guess.toLowerCase());
+    } catch {
+      return false;
+    }
+}
+  
 function updateRow(guess){
     const colors = new Array(5).fill(0); // 0 = gray, 1 = yellow, 2 = green
     const wordLetterCounts = {};

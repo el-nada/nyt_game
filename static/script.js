@@ -30,7 +30,7 @@ document.querySelector('.keyboard').addEventListener('click', (e) => {
 });
   
 function addLetter(letter) {
-    if (currentTile >= 5) return;
+    if (currentTile >= 5 || currentRow >5) return;
     const tiles = document.querySelectorAll('.row')[currentRow].children;
     tiles[currentTile].textContent = letter;
     tiles[currentTile].classList.add('hover'); 
@@ -57,13 +57,14 @@ function isLetter(event){
 function submitGuess(){
     const tiles = document.querySelectorAll(`.row:nth-child(${currentRow + 1}) .tile`);
     const guess = Array.from(tiles, tile => tile.textContent);
+
     if (guess.join('')==word){
         applyColors(new Array(5).fill(2), guess)
         currentRow=5
         alert()
     }
-    else if (currentTile==5 && currentRow<5){
-        updateRow(guess)
+    else if (currentTile==5 && currentRow<6){
+        updateRow(guess); 
         currentTile=0; 
         currentRow++; 
     }

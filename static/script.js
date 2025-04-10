@@ -63,6 +63,9 @@ function submitGuess(){
         currentRow=5
         alert()
     }
+    else if (currentTile ==5 && currentRow==5){
+        addMessage(word)
+    }
     else if (currentTile==5 && currentRow<6){
         updateRow(guess); 
         currentTile=0; 
@@ -130,6 +133,16 @@ function updateKeyboardColors(guess) {
             key.classList.add('keyAbsent'); 
         }
     };
+}
+
+function addMessage(message) {
+    const messageDiv = document.querySelector('.message')
+    messageDiv.textContent=message
+    setTimeout(() => {
+        messageDiv.classList.remove('.message'); 
+        messageDiv.classList.remove('.replay');
+        messageDiv.textContent=''; 
+      }, 3000); 
 }
 
 async function getWord() {

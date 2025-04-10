@@ -67,6 +67,14 @@ async function submitGuess(){
     }
     else if (currentTile ==5 && currentRow==5){
         if (!valid) {
+            const currentRowElement = document.querySelectorAll('.row')[currentRow];
+            currentRowElement.classList.add('invalid');
+    
+            // Remove class after animation
+            setTimeout(() => {
+            currentRowElement.classList.remove('invalid');
+            }, 600);
+            
             addMessage("Not a valid word!");
             return;
         }
@@ -77,6 +85,14 @@ async function submitGuess(){
     }
     else if (currentTile==5 && currentRow<6){
         if (!valid) {
+            const currentRowElement = document.querySelectorAll('.row')[currentRow];
+            currentRowElement.classList.add('invalid');
+    
+            // Remove class after animation
+            setTimeout(() => {
+            currentRowElement.classList.remove('invalid');
+            }, 800);
+            
             addMessage("Not a valid word!");
             return;
         }

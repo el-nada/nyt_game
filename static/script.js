@@ -60,7 +60,7 @@ async function submitGuess(){
 
     let valid = await isValidWord(guess.join('')); 
 
-    
+
     if (guess.join('')==word){
         applyColors(new Array(5).fill(2), guess)
         currentRow=5
@@ -170,16 +170,16 @@ function addMessage(message) {
       }, 3000); 
 }
 
-async function initGame() {
-    word = await getWord();
+async function initGame(difficulty='easy') {
+    word = await getWord(difficulty);
     if (!word || word.length !== 5) {
         word = 'HELLO'; 
     }
     resetGame();
 }
 
-async function getWord() {
-    const res = await fetch('https://random-word-api.herokuapp.com/word?length=5');
+async function getWord(difficulty='easy') {
+    const res = await fetch(`https://random-word-api.vercel.app/api?length=5&difficulty=${difficulty}`);
     const [word] = await res.json();
     console.log(word)
     return word.toUpperCase();
@@ -199,10 +199,22 @@ function resetGame() {
     currentTile = 0;
 }
 
-document.querySelector('.replayButtons').addEventListener('click', (e) => {
-    const button = e.target.closest('.replay'); 
-    if (!button) return;
-    initGame(); 
+document.querySelector('.easy').addEventListener('click', (e) => {
+    initGame('easy'); 
+})
+
+document.querySelector('.medium').addEventListener('click', (e) => {
+    initGame('medium'); 
+})
+
+document.querySelector('.hard').addEventListener('click', (e) => {
+    initGame('hard'); 
+})
+
+document.querySelector('.random').addEventListener('click', (e) => {
+    const options = ['easy','medium', 'hard']
+    const i = Math.floor(Math.random() * 3);
+    initGame(options[i]); 
 })
 
 initGame();

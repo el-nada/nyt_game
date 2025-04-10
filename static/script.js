@@ -1,5 +1,5 @@
 
-const word = "HELLO"; 
+let word = '';
 
 let currentRow = 0; 
 let currentTile = 0; 
@@ -65,13 +65,15 @@ function submitGuess(){
     }
     else if (currentTile ==5 && currentRow==5){
         addMessage(word)
+        updateRow(guess); 
+        currentTile=0; 
+        currentRow++; 
     }
     else if (currentTile==5 && currentRow<6){
         updateRow(guess); 
         currentTile=0; 
         currentRow++; 
     }
-    getWord()
 }
 
 function updateRow(guess){
@@ -138,11 +140,20 @@ function updateKeyboardColors(guess) {
 function addMessage(message) {
     const messageDiv = document.querySelector('.message')
     messageDiv.textContent=message
+    messageDiv.classList.add('active');
+
     setTimeout(() => {
-        messageDiv.classList.remove('.message'); 
-        messageDiv.classList.remove('.replay');
+        messageDiv.classList.remove('active');
         messageDiv.textContent=''; 
       }, 3000); 
+}
+
+async function initGame() {
+    word = await getWord();
+    if (!word || word.length !== 5) {
+        word = 'HELLO'; 
+    }
+    resetGame();
 }
 
 async function getWord() {
@@ -151,3 +162,25 @@ async function getWord() {
     console.log(word)
     return word.toUpperCase();
 }
+
+function resetGame() {
+    document.querySelectorAll('.tile').forEach(tile => {
+        tile.textContent = '';
+        tile.className = 'tile';
+    });
+    
+    document.querySelectorAll('.key').forEach(key => {
+        key.className = 'key';
+    });
+
+    currentRow = 0;
+    currentTile = 0;
+}
+
+document.querySelector('.replayButtons').addEventListener('click', (e) => {
+    const button = e.target.closest('.replay'); 
+    if (!button) return;
+    initGame(); 
+})
+
+initGame();
